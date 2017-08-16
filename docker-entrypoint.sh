@@ -20,7 +20,26 @@ if [ $# = 1 ] && [ "$1" = 'varnishd' ]; then
 			-q "${VARNISH_DEBUG_LOG_QUERY:-*}" \
 			-t 10 $VARNISH_DEBUG_LOG_OPTS &
 	elif [ ${VARNISH_LOG_ENABLED:-1} -eq 1 ]; then
-		LOG_FORMAT='%h %u %t "%r" %s "%{Referer}i" "%{User-agent}i" %{Varnish:hitmiss}x'
+    LOG_FORMAT='{ 
+        "@timestamp": "%{%Y-%m-%dT%H:%M:%S%z}t",
+        "remoteip":"%h",
+        "xforwardedfor":"%{X-Forwarded-For}i",
+        "method":"%m",
+        "url":"%U",
+        "request":"%r",
+        "httpversion":"%H",
+        "status": %s,
+        "bytes": %b,
+        "referrer":"%{Referer}i",
+        "agent":"%{User-agent}i",
+        "berespms" : "%{Varnish:time_firstbyte}x",
+        "duration_usec": %D,
+        "cache" : "%{Varnish:handling}x",
+        "served_by":"%{Served-By}o",
+        "accept_encoding":"%{Accept-Encoding}i",
+        "xf_proto":"%{X-Forwarded-Proto}i"
+    }'
+ 
 		
 		varnishncsa \
 			-n /var/lib/varnish \

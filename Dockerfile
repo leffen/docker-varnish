@@ -28,19 +28,19 @@ RUN set -xe \
 	&& cd /usr/src \
 	&& curl -fSL https://repo.varnish-cache.org/source/varnish-$VARNISH_VERSION.tar.gz -o varnish.tar.gz \
 	&& PATCH_URL_BASE=http://git.alpinelinux.org/cgit/aports/plain/main/varnish \
-	&& curl -fSL $PATCH_URL_BASE/fix-compat-execinfo.patch -o fix-compat-execinfo.patch \
+#	&& curl -fSL $PATCH_URL_BASE/fix-compat-execinfo.patch -o fix-compat-execinfo.patch \
 	&& curl -fSL $PATCH_URL_BASE/fix-stack-overflow.patch -o fix-stack-overflow.patch \
 	&& curl -fSL $PATCH_URL_BASE/musl-mode_t.patch -o musl-mode_t.patch \
-	&& curl -fSL $PATCH_URL_BASE/varnish-4.1.3_fix_Werror_el6.patch -o varnish-4.1.3_fix_Werror_el6.patch \
+#	&& curl -fSL $PATCH_URL_BASE/varnish-4.1.3_fix_Werror_el6.patch -o varnish-4.1.3_fix_Werror_el6.patch \
 	&& echo "$VARNISH_SHA256 *varnish.tar.gz" | sha256sum -c - \
 	&& tar -zxf varnish.tar.gz \
 	&& cd varnish-$VARNISH_VERSION \
 	\
 	# Apply Alpine Linux patches so varnish compiles correctly
-	&& patch -p1 < /usr/src/fix-compat-execinfo.patch \
-	&& patch -p1 < /usr/src/fix-stack-overflow.patch \
-	&& patch -p1 < /usr/src/musl-mode_t.patch \
-	&& patch < /usr/src/varnish-4.1.3_fix_Werror_el6.patch \
+#	&& patch -p1 < /usr/src/fix-compat-execinfo.patch \
+#	&& patch -p1 < /usr/src/fix-stack-overflow.patch \
+#	&& patch -p1 < /usr/src/musl-mode_t.patch \
+#	&& patch < /usr/src/varnish-4.1.3_fix_Werror_el6.patch \
 	\
 	&& export CFLAGS="-fstack-protector-strong -fpic -fpie -O3 -DTCP_FASTOPEN=23" \
 					CPPFLAGS="$CFLAGS" \

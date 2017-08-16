@@ -1,5 +1,12 @@
 # Varnish
 
+Docker repo
+https://github.com/WeAreGenki/docker-varnish
+
+Log info:
+http://devopsblues.com/shipping-varnish-logs-to-elk-log-system/
+
+
 ## Supported tags and respective `Dockerfile` links
 
 -	[`4.1.0`, `4.1`, `4`, `latest` (*4.1.0/Dockerfile*)](https://github.com/newsdev/docker-varnish/blob/4/Dockerfile)
